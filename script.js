@@ -32,11 +32,20 @@ var alienBulletDiameter;
 var alienBulletX;
 var alienBulletY;
 
- function setup() {
+function setup() {
  	canvas= createCanvas(500,400);
  	background(25,90,100);
  	gameScreen = select("#Game-screen");
  	canvas.parent(gameScreen);
+
+ 	shipColor="#0000ff";
+ 	shipDiameter=50;
+ 	shipSpeed=10;
+ 	shipX=250;
+ 	shipY=370;
+ 	bulletDiameter=30;
+ 	shipShooting=false;
+
  }
   /*cnv.parent("Game-screen");
 }
@@ -62,13 +71,25 @@ var alienBulletY;
  */
 
 
-/*
- * draw()
- * This function animates the ship, alien, and both kinds of bullets, but only
- * if the game is running.
- */
+ function draw(){
+ 	background(25,90,100);
+ 	drawShip();
+ 	drawBullet();
+ 	if(shipShooting==true){
+ 		drawBullet();
+ 	}
+ }
 
-
+function drawShip() {
+	fill(shipColor);
+	ellipse(shipX,shipY,shipDiameter,shipDiameter);
+	if(keyIsDown(LEFT_ARROW)&&shipX>shipDiameter/2) {
+		shipX= shipX-shipSpeed;
+	}
+	if(keyIsDown(RIGHT_ARROW)&&shipX<width-shipDiameter/2) {
+		shipX= shipX+shipSpeed;
+	}
+}
 /*
  * drawShip()
  * This function draws the player's ship. It also controls the ship's
@@ -76,9 +97,16 @@ var alienBulletY;
  */
 
 
-/*
- * keyPressed()
- * This function runs automatically when the player presses the spacebar
+function keyPressed() {
+	if(keyCode===32 &&shipShooting==false) {
+		bulletX=shipX;
+		bulletY=shipY;
+		shipShooting=true;
+	} 
+
+}
+
+ /* This function runs automatically when the player presses the spacebar
  * (keyCode === 32). If they do, and a bullet is not currently being fired
  * ("shipShooting" variable is false), it positions the bullet relative to the
  * ship. Then it sets the "shipShooting" variable to "true", indicating a ship
@@ -86,9 +114,17 @@ var alienBulletY;
  */
 
 
-/*
- * drawBullet()
- * This function draws a bullet. It also checks to see if the bullet has hit
+function drawBullet() {
+	if(bulletY > 0) {
+		fill("#000000");
+		ellipse(bulletX,bulletY,bulletDiameter,bulletDiameter);
+		bulletY -=10;
+	}
+	else(shipShooting=false)
+}
+
+
+ /* This function draws a bullet. It also checks to see if the bullet has hit
  * the alien. If it has, the alien is reset to the top-left of the screen
  * and the player earns a point. The alien aslo becomes faster (i.e., harder
  * to hit) each time it is hit by a bullet.

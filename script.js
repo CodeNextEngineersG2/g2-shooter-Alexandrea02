@@ -32,10 +32,16 @@ var alienBulletDiameter;
 var alienBulletX;
 var alienBulletY;
 
+ function setup() {
+ 	canvas= createCanvas(500,400);
+ 	background(25,90,100);
+ 	gameScreen = select("#Game-screen");
+ 	canvas.parent(gameScreen);
+ }
+  /*cnv.parent("Game-screen");
+}
 
-/*
- * setup()
- * This function is called once. Sets up the canvas, accesses HTML elements with
+ /* This function is called once. Sets up the canvas, accesses HTML elements with
  * select(), and adds event listeners to those elements. Sets initial values of
  * variables by calling resetGame().
  */

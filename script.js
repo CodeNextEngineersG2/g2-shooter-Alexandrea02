@@ -51,6 +51,12 @@ function setup() {
  	alienY=15;
  	alienVelocity=10;
 
+ 	alienBulletX=10
+ 	alienBulletY=10
+ 	alienBulletDiameter= 10;
+ 	alienShooting=false;
+
+
  }
   /*cnv.parent("Game-screen");
 }
@@ -84,6 +90,9 @@ function setup() {
  		drawBullet();
  	}
  	drawAlien();
+ 	if(alienShooting=true) {
+ 		drawAlienBullet();
+ 	}
  }
 
 function drawShip() {
@@ -145,15 +154,28 @@ function drawAlien() {
 		}
 	fill("#ff0000");
 	ellipse(alienX,alienY,alienDiameter,alienDiameter);
+ 	
+ 	if(random(4) <1 && !alienShooting) {
+ 		alienBulletX=alienX;
+ 		alienBulletY=alienY;
+ 		alienShooting=true;
  	}
+ }
  /* This function draws an alien. It also checks to see if the alien has touched
  * the player's ship. If it has, the function calls gameOver().
  */
 
 
-/*
- * drawAlienBullet()
- * This function behaves much like drawBullet(), only it fires from the alien
+function drawAlienBullet(){
+	if(alienBulletY<height) {
+		ellipse(alienBulletX,alienBulletY,alienBulletDiameter,alienBulletDiameter);
+		alienBulletY+=10;
+	} 
+	else{
+		alienShooting=false
+	}
+}
+ /* This function behaves much like drawBullet(), only it fires from the alien
  * and not the player's ship. If the bullet hits the player, it's game over.
  */
 

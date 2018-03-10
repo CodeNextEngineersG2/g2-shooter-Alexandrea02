@@ -46,6 +46,11 @@ function setup() {
  	bulletDiameter=30;
  	shipShooting=false;
 
+ 	alienDiameter=30;
+ 	alienX=15;
+ 	alienY=15;
+ 	alienVelocity=10;
+
  }
   /*cnv.parent("Game-screen");
 }
@@ -78,6 +83,7 @@ function setup() {
  	if(shipShooting==true){
  		drawBullet();
  	}
+ 	drawAlien();
  }
 
 function drawShip() {
@@ -131,9 +137,16 @@ function drawBullet() {
  */
 
 
-/*
- * drawAlien()
- * This function draws an alien. It also checks to see if the alien has touched
+function drawAlien() {
+	alienX= alienX + alienVelocity;
+	if(alienX>=width- alienDiameter/2 
+		|| alienX<=alienDiameter/2) {
+		alienVelocity*= -1;
+		}
+	fill("#ff0000");
+	ellipse(alienX,alienY,alienDiameter,alienDiameter);
+ 	}
+ /* This function draws an alien. It also checks to see if the alien has touched
  * the player's ship. If it has, the function calls gameOver().
  */
 
